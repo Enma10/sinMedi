@@ -1,0 +1,131 @@
+/* Estilos generales */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #369A98, #B7DAD4);
+  font-family: 'Arial', sans-serif;
+  padding: 20px;
+}
+
+/* Tarjeta del formulario */
+.login-box {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  text-align: center;
+}
+
+/* Logo más grande */
+.login-logo {
+  width: 180px; 
+  height: auto;
+  margin-bottom: 1rem; 
+}
+
+/* Título */
+.login-box h1 {
+  color: #369A98;
+  margin-bottom: 1rem;
+}
+
+/* Campos de entrada */
+.login-box input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 16px;
+}
+
+.login-box input:focus {
+  border-color: #0077b6;
+  outline: none;
+}
+
+/* Botón de login */
+.login-button {
+  background: #E83A6B;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+.login-button:hover {
+  background: #c22753;
+}
+
+/* Enlace de registro */
+.register-link {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.register-link a {
+  color: #0077b6;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+/* Diseño responsivo */
+@media (max-width: 768px) {
+  .login-box {
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  .login-logo {
+    width: 150px;
+  }
+
+  .login-box h1 {
+    font-size: 22px;
+  }
+
+  .login-box input {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .login-button {
+    font-size: 16px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-box {
+    width: 100%;
+    max-width: 320px;
+    padding: 1.2rem;
+  }
+
+  .login-logo {
+    width: 120px;
+  }
+
+  .login-box h1 {
+    font-size: 20px;
+  }
+
+  .login-box input {
+    font-size: 14px;
+  }
+
+  .login-button {
+    font-size: 14px;
+  }
+}

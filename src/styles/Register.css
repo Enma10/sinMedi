@@ -1,0 +1,120 @@
+/* Estilos generales */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #369A98, #B7DAD4);
+  padding: 20px;
+}
+
+.register-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  text-align: center;
+}
+
+/* Logo más grande */
+.register-logo {
+  width: 180px;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+/* Título */
+.register-box h1 {
+  color: #369A98;
+  margin-bottom: 1rem;
+}
+
+/* Campos de entrada */
+.register-box input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #90caf9;
+  border-radius: 20px;
+  font-size: 16px;
+}
+
+.register-box input:focus {
+  border-color: #1565c0;
+  outline: none;
+}
+
+/* Botón de registro */
+.register-button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background: #E83A6B;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.register-button:hover {
+  background: #c22753;
+}
+
+/* Enlace de inicio de sesión */
+.login-link {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Ajustes para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .register-box {
+      width: 90%;
+      padding: 1.5rem;
+  }
+
+  .register-logo {
+      width: 150px; /* Ajuste para pantallas medianas */
+  }
+
+  .register-box h1 {
+      font-size: 22px;
+  }
+
+  .register-box input {
+      font-size: 14px;
+      padding: 8px;
+  }
+
+  .register-button {
+      font-size: 16px;
+      padding: 8px;
+  }
+}
+
+/* Ajustes para dispositivos muy pequeños (teléfonos en vertical) */
+@media (max-width: 480px) {
+  .register-box {
+      width: 100%;
+      max-width: 320px;
+      padding: 1.2rem;
+  }
+
+  .register-logo {
+      width: 120px; /* Más pequeño en móviles */
+  }
+
+  .register-box h1 {
+      font-size: 20px;
+  }
+
+  .register-box input {
+      font-size: 14px;
+  }
+
+  .register-button {
+      font-size: 14px;
+  }
+}
