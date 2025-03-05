@@ -1,102 +1,219 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/Profile.css";
+import { Line } from "react-chartjs-2";
+import "chart.js/auto";
 
 const Profile = () => {
-  const [showDataModal, setShowDataModal] = useState(false);
-  const [showRatingsModal, setShowRatingsModal] = useState(false);
+  const [ratingsCaminatas, setRatingsCaminatas] = useState(Array(8).fill({ rating: null, completed: false }));
+  const [ratingsComidas, setRatingsComidas] = useState(Array(8).fill({ rating: null, completed: false }));
+  const [profilePhoto, setProfilePhoto] = useState(null);
+  const [beforePhoto, setBeforePhoto] = useState(null);
+  const [afterPhoto, setAfterPhoto] = useState(null);
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
+  const [showBeforeAfter, setShowBeforeAfter] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Cargar las fotos guardadas en localStorage
+    const savedProfilePhoto = localStorage.getItem("profilePhoto");
+    const savedBeforePhoto = localStorage.getItem("beforePhoto");
+    const savedAfterPhoto = localStorage.getItem("afterPhoto");
+    const savedRatingsCaminatas = JSON.parse(localStorage.getItem("ratingsCaminatas")) || [];
+    const savedRatingsComidas = JSON.parse(localStorage.getItem("ratingsComidas")) || [];
+
+    setProfilePhoto(savedProfilePhoto);
+    setBeforePhoto(savedBeforePhoto);
+    setAfterPhoto(savedAfterPhoto);
+    setRatingsCaminatas(savedRatingsCaminatas);
+    setRatingsComidas(savedRatingsComidas);
+  }, []);
+
+  const handleRatingCaminata = (week, rating) => {
+    const updatedRatings = [...ratingsCaminatas];
+    updatedRatings[week - 1] = { rating, completed: true };
+    setRatingsCaminatas(updatedRatings);
+    localStorage.setItem("ratingsCaminatas", JSON.stringify(updatedRatings));
+  };
+
+  const handleRatingComida = (week, rating) => {
+    const updatedRatings = [...ratingsComidas];
+    updatedRatings[week - 1] = { rating, completed: true };
+    setRatingsComidas(updatedRatings);
+    localStorage.setItem("ratingsComidas", JSON.stringify(updatedRatings));
+  };
+
+  const handleImageUpload = (e, type) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith("image/")) { // Verificar que sea una imagen
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (type === "profile") {
+          setProfilePhoto(reader.result);
+          localStorage.setItem("profilePhoto", reader.result);
+        } else if (type === "before") {
+          setBeforePhoto(reader.result);
+          localStorage.setItem("beforePhoto", reader.result);
+        } else if (type === "after") {
+          setAfterPhoto(reader.result);
+          localStorage.setItem("afterPhoto", reader.result);
+        }
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert("Por favor selecciona un archivo de imagen.");
+    }
+  };
+
+  const handleLogout = () => {
+    navigate("/login");
+  };
+
+  const handleImageClick = (image) => {
+    setSelectedImage(image);
+    setIsImageModalOpen(true);
+  };
+
+  const handleCloseImageModal = () => {
+    setIsImageModalOpen(false);
+    setSelectedImage("");
+  };
+
+  const toggleBeforeAfter = () => {
+    setShowBeforeAfter(!showBeforeAfter);
+  };
+
+  const getProgressData = (ratings) => ({
+    labels: Array.from({ length: 8 }, (_, i) => `Semana ${i + 1}`),
+    datasets: [
+      {
+        label: "Progreso",
+        data: ratings.map(w => w.rating),
+        borderColor: "#4CAF50",
+        backgroundColor: "rgba(76, 175, 80, 0.2)",
+      },
+    ],
+  });
 
   return (
     <div>
-      {/* Botón de WhatsApp FUERA del container */}
-      <a
-        href="https://wa.me/7228402209" 
-        className="whatsapp-button"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="35"
-          height="35"
-          viewBox="0 0 24 24"
-        >
-          <path
-            fill="white"
-            d="M12 2C6.48 2 2 6.48 2 12c0 1.92.54 3.71 1.48 5.23L2 22l4.9-1.47C8.31 21.46 10.09 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2m0 18c-1.69 0-3.26-.53-4.57-1.43l-.33-.22-2.91.87.93-2.83-.21-.33A8.06 8.06 0 014 12c0-4.42 3.58-8 8-8s8 3.58 8 8-3.58 8-8 8m4.37-5.33c-.24-.12-1.42-.7-1.64-.78s-.38-.12-.54.12c-.16.24-.62.78-.76.94s-.28.18-.52.06-1.02-.38-1.94-1.19c-.72-.63-1.19-1.42-1.32-1.66s-.01-.37.11-.49c.12-.12.26-.32.38-.48.12-.16.16-.24.24-.4.08-.16.04-.3-.02-.42s-.54-1.29-.74-1.78c-.2-.48-.4-.42-.54-.42h-.46c-.16 0-.42.06-.64.3s-.84.82-.84 2 .86 2.36.98 2.52c.12.16 1.69 2.58 4.1 3.62 1.54.67 2.14.72 2.91.6.44-.07 1.42-.58 1.62-1.14.2-.56.2-1.03.14-1.14-.06-.11-.22-.18-.46-.3"
-          />
-        </svg>
-      </a>
-
-      {/* Contenedor del perfil */}
       <div className="profile-container">
         <div className="profile-box">
           <h1>Mi Perfil</h1>
+
           <img
-            src="/path-to-user-photo.jpg"
+            src={profilePhoto || "/images/default-profile.jpg"}
             alt="Foto de perfil"
-            className="profile-photo"
+            className="profile-photo small-photo"
+            onClick={() => handleImageClick(profilePhoto || "/images/default-profile.jpg")}
           />
 
           <div className="photo-upload">
+            <label>Foto de Perfil:</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleImageUpload(e, "profile")}
+            />
+          </div>
+
+          <div className="photo-upload">
             <label>Foto Antes:</label>
-            <input type="file" accept="image/*" />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleImageUpload(e, "before")}
+            />
+          </div>
+
+          <div className="photo-upload">
             <label>Foto Después:</label>
-            <input type="file" accept="image/*" />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleImageUpload(e, "after")}
+            />
           </div>
 
-          <button className="profile-button" onClick={() => setShowDataModal(true)}>
-            Registrar Datos
-          </button>
-          <button className="profile-button" onClick={() => setShowRatingsModal(true)}>
-            Calificar Caminatas
-          </button>
-
-          <div className="audio-section">
-            <h3>Audios de Motivación</h3>
-            <audio controls>
-              <source src="/path-to-motivation-audio.mp3" type="audio/mpeg" />
-              Tu navegador no soporta el audio.
-            </audio>
+          <div className="show-hide-btn">
+            <button onClick={toggleBeforeAfter}>
+              {showBeforeAfter ? "Ocultar Fotos" : "Mostrar Fotos Antes/Después"}
+            </button>
           </div>
+
+          {showBeforeAfter && (
+            <div className="before-after-photos">
+              {beforePhoto && (
+                <img
+                  src={beforePhoto}
+                  alt="Foto de antes"
+                  className="before-photo small-photo"
+                  onClick={() => handleImageClick(beforePhoto)}
+                />
+              )}
+              {afterPhoto && (
+                <img
+                  src={afterPhoto}
+                  alt="Foto de después"
+                  className="after-photo small-photo"
+                  onClick={() => handleImageClick(afterPhoto)}
+                />
+              )}
+            </div>
+          )}
+
+          <div className="tabs">
+            <Link to="/caminatas">
+              <button className="profile-button">Caminatas</button>
+            </Link>
+            <Link to="/comidas">
+              <button className="profile-button">Plan Alimenticio</button>
+            </Link>
+          </div>
+
+          <div className="progress-container">
+            <h3>Progreso de Caminatas</h3>
+            {ratingsCaminatas.map((week, index) => (
+              <div key={index}>
+                <span>Semana {index + 1}:</span>
+                <button
+                  disabled={week.completed}
+                  onClick={() => handleRatingCaminata(index + 1, prompt('Ingresa la calificación de la caminata:'))}
+                >
+                  {week.completed ? `Completada (Calificación: ${week.rating})` : 'Calificar'}
+                </button>
+              </div>
+            ))}
+            <Line data={getProgressData(ratingsCaminatas)} />
+
+            <h3>Progreso de Plan Alimenticio</h3>
+            {ratingsComidas.map((week, index) => (
+              <div key={index}>
+                <span>Semana {index + 1}:</span>
+                <button
+                  disabled={week.completed}
+                  onClick={() => handleRatingComida(index + 1, prompt('Ingresa la calificación del plan alimenticio:'))}
+                >
+                  {week.completed ? `Completada (Calificación: ${week.rating})` : 'Calificar'}
+                </button>
+              </div>
+            ))}
+            <Line data={getProgressData(ratingsComidas)} />
+          </div>
+
+          <button className="profile-button logout-button" onClick={handleLogout}>
+            Cerrar Sesión
+          </button>
         </div>
       </div>
 
-      {/* Modal para registrar datos */}
-      {showDataModal && (
-        <div className="modal">
+      {isImageModalOpen && (
+        <div className="image-modal">
           <div className="modal-content">
-            <button className="close-modal" onClick={() => setShowDataModal(false)}>X</button>
-            <h2>Registrar Datos</h2>
-            {/* Contenido del modal */}
-            <form>
-              <label>
-                Peso:
-                <input type="number" placeholder="Ingrese su peso" />
-              </label>
-              <label>
-                Talla:
-                <input type="number" placeholder="Ingrese su talla" />
-              </label>
-              <button className="profile-button" type="submit">Guardar</button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Modal para calificar caminatas */}
-      {showRatingsModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <button className="close-modal" onClick={() => setShowRatingsModal(false)}>X</button>
-            <h2>Calificar Actividades</h2>
-            {/* Contenido del modal */}
-            <form>
-              <label>
-                Calificación:
-                <input type="number" min="1" max="5" placeholder="Califique la caminata" />
-              </label>
-              <button className="profile-button" type="submit">Guardar</button>
-            </form>
+            <button className="close-modal" onClick={handleCloseImageModal}>X</button>
+            <img src={selectedImage} alt="Imagen seleccionada" className="large-image" />
           </div>
         </div>
       )}
