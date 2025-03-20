@@ -9,7 +9,6 @@ const Comidas = () => {
   const [rating, setRating] = useState(0);
   const [followedInstructions, setFollowedInstructions] = useState(0);
 
-<<<<<<< HEAD
   // Array con las imágenes para cada semana
   const images = [
     `${process.env.PUBLIC_URL}/imagesAlimentacion/semana1.gif`,
@@ -24,32 +23,12 @@ const Comidas = () => {
 
   useEffect(() => {
     const newAudioUrl = `${process.env.PUBLIC_URL}/audiosAlimentacion/audioA${currentWeek}.mp3`;
-=======
-  // Array con las imágenes para cada día
-  const images = [
-    `${process.env.PUBLIC_URL}/imagesAlimentacion/dia1.gif`,
-    `${process.env.PUBLIC_URL}/imagesAlimentacion/dia2.gif`,
-    `${process.env.PUBLIC_URL}/imagesAlimentacion/dia3.gif`,
-    `${process.env.PUBLIC_URL}/imagesAlimentacion/dia4.gif`,
-    `${process.env.PUBLIC_URL}/imagesAlimentacion/dia5.gif`,
-    `${process.env.PUBLIC_URL}/imagesAlimentacion/dia6.gif`,
-    `${process.env.PUBLIC_URL}/imagesAlimentacion/dia7.gif`,
-    `${process.env.PUBLIC_URL}/imagesAlimentacion/dia8.gif`
-  ];
-
-  useEffect(() => {
-    const newAudioUrl = `${process.env.PUBLIC_URL}/audiosAlimentacion/audioA${currentDay}.mp3`;
->>>>>>> 30419d5 (imagenes)
     setAudioUrl(newAudioUrl);
 
     // Forzar la carga del audio
     const audio = new Audio(newAudioUrl);
     audio.load();
-<<<<<<< HEAD
   }, [currentWeek]);
-=======
-  }, [currentDay]);
->>>>>>> 30419d5 (imagenes)
 
   const handleRatingChange = (e) => {
     const value = Math.max(0, Math.min(10, Number(e.target.value)));
@@ -62,11 +41,7 @@ const Comidas = () => {
   };
 
   const handleNextDay = () => {
-<<<<<<< HEAD
     if (currentDay < 7) {
-=======
-    if (currentDay < 8) {
->>>>>>> 30419d5 (imagenes)
       setCurrentDay(currentDay + 1);
       setRating(0);
       setFollowedInstructions(0);
@@ -88,26 +63,16 @@ const Comidas = () => {
         <h1>Semana {currentWeek} - Día {currentDay} del Plan de Comidas</h1>
 
         <div className="audio-section">
-<<<<<<< HEAD
           <h3>Audio del Plan de Comidas para esta Semana</h3>
-=======
-          <h3>Audio del Plan de Comidas para este Día</h3>
->>>>>>> 30419d5 (imagenes)
           <audio key={audioUrl} controls>
             <source src={audioUrl} type="audio/mpeg" />
             Tu navegador no soporta el audio.
           </audio>
         </div>
 
-<<<<<<< HEAD
         {/* Mostrar la imagen correspondiente a la semana actual */}
         <div className="image-section">
           <img src={images[currentWeek - 1]} alt={`Semana ${currentWeek}`} className="week-image" />
-=======
-        {/* Mostrar la imagen correspondiente al día actual */}
-        <div className="image-section">
-          <img src={images[currentDay - 1]} alt={`Día ${currentDay}`} className="day-image" />
->>>>>>> 30419d5 (imagenes)
         </div>
 
         <div className="rating-section">
@@ -137,23 +102,11 @@ const Comidas = () => {
         </div>
 
         <div className="next-buttons">
-<<<<<<< HEAD
           <button className="next-day-btn" onClick={handleNextDay} disabled={currentDay >= 7}>
             Avanzar al siguiente día
           </button>
 
           <button className="next-week-btn" onClick={handleNextWeek} disabled={currentWeek >= 8 || currentDay !== 7}>
-=======
-          <button className="next-day-btn" onClick={handleNextDay} disabled={currentDay >= 8}>
-            Avanzar al siguiente día
-          </button>
-
-          <button
-            className="next-week-btn"
-            onClick={handleNextWeek}
-            disabled={currentWeek >= 8 || currentDay < 8} // El botón solo se desactiva si no has llegado al último día de la semana o ya completaste el plan
-          >
->>>>>>> 30419d5 (imagenes)
             Avanzar a la siguiente semana
           </button>
         </div>
@@ -169,7 +122,3 @@ const Comidas = () => {
 };
 
 export default Comidas;
-<<<<<<< HEAD
-
-=======
->>>>>>> 30419d5 (imagenes)
