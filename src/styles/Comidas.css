@@ -84,3 +84,11 @@
     background-color: #45a049;
   }
   
+  .day-image {
+    width: 100%;
+    max-width: 300px;
+    display: block;
+    margin: 20px auto;
+    border-radius: 30px;
+  }
+  
