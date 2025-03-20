@@ -9,10 +9,22 @@ const Comidas = () => {
   const [rating, setRating] = useState(0);
   const [followedInstructions, setFollowedInstructions] = useState(0);
 
+  // Array con las imágenes para cada semana
+  const images = [
+    `${process.env.PUBLIC_URL}/imagesAlimentacion/semana1.gif`,
+    `${process.env.PUBLIC_URL}/imagesAlimentacion/semana2.gif`,
+    `${process.env.PUBLIC_URL}/imagesAlimentacion/semana3.gif`,
+    `${process.env.PUBLIC_URL}/imagesAlimentacion/semana4.gif`,
+    `${process.env.PUBLIC_URL}/imagesAlimentacion/semana5.gif`,
+    `${process.env.PUBLIC_URL}/imagesAlimentacion/semana6.gif`,
+    `${process.env.PUBLIC_URL}/imagesAlimentacion/semana7.gif`,
+    `${process.env.PUBLIC_URL}/imagesAlimentacion/semana8.gif`
+  ];
+
   useEffect(() => {
     const newAudioUrl = `${process.env.PUBLIC_URL}/audiosAlimentacion/audioA${currentWeek}.mp3`;
     setAudioUrl(newAudioUrl);
-    
+
     // Forzar la carga del audio
     const audio = new Audio(newAudioUrl);
     audio.load();
@@ -24,7 +36,7 @@ const Comidas = () => {
   };
 
   const handleFollowInstructionsChange = (e) => {
-    const value = Math.max(0, Math.min(10, Number(e.target.value))); // Ahora es de 0-10
+    const value = Math.max(0, Math.min(10, Number(e.target.value)));
     setFollowedInstructions(value);
   };
 
@@ -56,6 +68,11 @@ const Comidas = () => {
             <source src={audioUrl} type="audio/mpeg" />
             Tu navegador no soporta el audio.
           </audio>
+        </div>
+
+        {/* Mostrar la imagen correspondiente a la semana actual */}
+        <div className="image-section">
+          <img src={images[currentWeek - 1]} alt={`Semana ${currentWeek}`} className="week-image" />
         </div>
 
         <div className="rating-section">
@@ -105,3 +122,4 @@ const Comidas = () => {
 };
 
 export default Comidas;
+
