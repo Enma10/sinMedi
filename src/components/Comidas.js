@@ -5,23 +5,17 @@ import "../styles/Comidas.css";
 const Comidas = () => {
   const [currentWeek, setCurrentWeek] = useState(1);
   const [currentDay, setCurrentDay] = useState(1);
-  const [audioUrl, setAudioUrl] = useState('');
+  const [audioUrl, setAudioUrl] = useState("");
   const [rating, setRating] = useState(0);
   const [followedInstructions, setFollowedInstructions] = useState(0);
 
-  const weeklyAudioUrls = [
-    "/audios/comidas-semana-1.mp3",
-    "/audios/comidas-semana-2.mp3",
-    "/audios/comidas-semana-3.mp3",
-    "/audios/comidas-semana-4.mp3",
-    "/audios/comidas-semana-5.mp3",
-    "/audios/comidas-semana-6.mp3",
-    "/audios/comidas-semana-7.mp3",
-    "/audios/comidas-semana-8.mp3",
-  ];
-
   useEffect(() => {
-    setAudioUrl(weeklyAudioUrls[currentWeek - 1]);
+    const newAudioUrl = `${process.env.PUBLIC_URL}/audiosAlimentacion/audioA${currentWeek}.mp3`;
+    setAudioUrl(newAudioUrl);
+    
+    // Forzar la carga del audio
+    const audio = new Audio(newAudioUrl);
+    audio.load();
   }, [currentWeek]);
 
   const handleRatingChange = (e) => {
@@ -30,7 +24,7 @@ const Comidas = () => {
   };
 
   const handleFollowInstructionsChange = (e) => {
-    const value = Math.max(0, Math.min(100, Number(e.target.value)));
+    const value = Math.max(0, Math.min(10, Number(e.target.value))); // Ahora es de 0-10
     setFollowedInstructions(value);
   };
 
@@ -58,7 +52,7 @@ const Comidas = () => {
 
         <div className="audio-section">
           <h3>Audio del Plan de Comidas para esta Semana</h3>
-          <audio controls>
+          <audio key={audioUrl} controls>
             <source src={audioUrl} type="audio/mpeg" />
             Tu navegador no soporta el audio.
           </audio>
@@ -78,11 +72,11 @@ const Comidas = () => {
               />
             </label>
             <label>
-              ¿Cuánto seguiste las instrucciones? (0-100%):
+              ¿Cuánto seguiste las instrucciones? (0-10):
               <input
                 type="number"
                 min="0"
-                max="100"
+                max="10"
                 value={followedInstructions}
                 onChange={handleFollowInstructionsChange}
               />
