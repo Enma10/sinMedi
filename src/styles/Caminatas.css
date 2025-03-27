@@ -1,5 +1,4 @@
-/* Caminatas.css */
-
+/* Estilos generales */
 .caminatas-container {
   display: flex;
   justify-content: center;
@@ -18,13 +17,17 @@
   max-width: 600px;
 }
 
+/* Mantener títulos visibles y sin desplazar hacia arriba */
 h1 {
   text-align: center;
   color: #4CAF50;
+  margin-bottom: 15px; /* Espaciado para que no se junte con el carrusel */
 }
 
+/* Estilos para el audio */
 .audio-section {
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .audio-section h3 {
@@ -37,10 +40,35 @@ h1 {
   margin-top: 10px;
 }
 
+/* Estilos para el carrusel de imágenes */
+.carousel-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Reducción del tamaño del carrusel */
+.carousel-section .carousel {
+  max-width: 400px; /* Ancho reducido */
+  margin: 0 auto; /* Centrado */
+}
+
+.carousel-section img {
+  width: 100%;
+  max-width: 400px; /* Ajuste del tamaño */
+  height: 250px; /* Altura más compacta */
+  object-fit: cover; /* Ajuste sin distorsión */
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para la calificación */
+.rating-section {
+  margin-top: 20px;
+}
+
 .rating-section h3 {
   font-size: 1.2em;
   color: #333;
-  margin-top: 20px;
 }
 
 .input-group {
@@ -62,6 +90,7 @@ h1 {
   border: 1px solid #ddd;
 }
 
+/* Estilos para los botones */
 .next-buttons {
   display: flex;
   justify-content: space-between;
@@ -89,6 +118,7 @@ h1 {
   background-color: #45a049;
 }
 
+/* Estilos para los mensajes */
 p {
   text-align: center;
   color: #4CAF50;
