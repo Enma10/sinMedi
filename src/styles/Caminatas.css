@@ -2,10 +2,11 @@
 .caminatas-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* Alinea al principio para que el contenido no se quede demasiado abajo */
   padding: 20px;
   background-color: #f9f9f9;
   height: 100vh;
+  box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
 }
 
 .caminatas-box {
@@ -13,15 +14,18 @@
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   padding: 30px;
-  width: 80%;
+  width: 100%;
   max-width: 600px;
+  box-sizing: border-box;
 }
 
-/* Mantener títulos visibles y sin desplazar hacia arriba */
+/* Títulos visibles y sin desplazar */
 h1 {
   text-align: center;
   color: #4CAF50;
-  margin-bottom: 15px; /* Espaciado para que no se junte con el carrusel */
+  font-size: 1.5em; /* Incremento del tamaño de fuente */
+  font-weight: bold;
+  margin-bottom: 20px; /* Aumento del margen para que no se junte con el carrusel */
 }
 
 /* Estilos para el audio */
@@ -33,6 +37,7 @@ h1 {
 .audio-section h3 {
   font-size: 1.2em;
   color: #333;
+  margin-bottom: 10px;
 }
 
 .audio-section audio {
@@ -46,17 +51,15 @@ h1 {
   text-align: center;
 }
 
-/* Reducción del tamaño del carrusel */
 .carousel-section .carousel {
-  max-width: 400px; /* Ancho reducido */
-  margin: 0 auto; /* Centrado */
+  max-width: 450px; /* Ancho ligeramente mayor */
+  margin: 0 auto;
 }
 
 .carousel-section img {
   width: 100%;
-  max-width: 400px; /* Ajuste del tamaño */
-  height: 250px; /* Altura más compacta */
-  object-fit: cover; /* Ajuste sin distorsión */
+  height: 250px;
+  object-fit: cover;
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
@@ -124,4 +127,5 @@ p {
   color: #4CAF50;
   font-weight: bold;
   margin-top: 20px;
+  font-size: 1.2em; /* Ajuste para mejor visibilidad */
 }

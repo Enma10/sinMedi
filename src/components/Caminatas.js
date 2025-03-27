@@ -10,6 +10,7 @@ const Caminatas = () => {
   const [audioUrl, setAudioUrl] = useState('');
   const [rating, setRating] = useState(1);
   const [followedInstructions, setFollowedInstructions] = useState(1);
+  const [dayCompleted, setDayCompleted] = useState(false);
 
   useEffect(() => {
     setAudioUrl(`${process.env.PUBLIC_URL}/audios/Audio${currentWeek}.mp3`);
@@ -17,38 +18,37 @@ const Caminatas = () => {
 
   const handleRatingChange = (e) => setRating(e.target.value);
   const handleFollowInstructionsChange = (e) => setFollowedInstructions(e.target.value);
+  const handleCheckboxChange = () => setDayCompleted(!dayCompleted);
 
   const handleNextDay = () => {
-    if (currentDay < 7) {
+    if (currentDay < 7 && dayCompleted) {
       setCurrentDay(currentDay + 1);
       setRating(1);
       setFollowedInstructions(1);
+      setDayCompleted(false);
     }
   };
 
   const handleNextWeek = () => {
-    if (currentWeek < 8) {
+    if (currentWeek < 8 && currentDay === 7 && dayCompleted) {
       setCurrentWeek(currentWeek + 1);
       setCurrentDay(1);
       setRating(1);
       setFollowedInstructions(1);
+      setDayCompleted(false);
     }
   };
 
-  // Rutas dinámicas para 7 imágenes
-  const images = Array.from({ length: 7 }, (_, index) => 
-    `${process.env.PUBLIC_URL}/images/week${currentWeek}/day${currentDay}_${index + 1}.jpg`
-  );
-
-  console.log("Imágenes cargadas:", images);
+  // Generar las rutas de las imágenes para cada semana y día
+  const images = Array.from({ length: 7 }, (_, index) => {
+    return `${process.env.PUBLIC_URL}/images/week${currentWeek}/day${currentWeek}_${index + 1}.jpg`;  // Cambiar para incluir todos los días de la semana
+  });
 
   return (
     <div className="caminatas-container">
       <div className="caminatas-box">
-        {/* Título de la semana y el día */}
         <h1>Semana {currentWeek} - Día {currentDay} de Caminatas</h1>
 
-        {/* Sección de audio */}
         <div className="audio-section">
           <h3>Audio de Caminata para esta Semana</h3>
           <audio key={audioUrl} controls>
@@ -57,50 +57,57 @@ const Caminatas = () => {
           </audio>
         </div>
 
-        {/* Carrusel de imágenes debajo del audio */}
+        {/* Carrusel para la semana actual */}
         <div className="carousel-section">
           <Carousel 
             showThumbs={false} 
             autoPlay 
             infiniteLoop 
-            interval={3000}  // Cambio automático cada 3 segundos
-            transitionTime={500} // Tiempo de transición entre imágenes
-            stopOnHover={false} // Hace que el carrusel siga cambiando incluso si el mouse está sobre él
+            interval={3000}  
+            transitionTime={500} 
+            stopOnHover={false} 
           >
             {images.map((img, index) => (
               <div key={index}>
                 <img 
                   src={img} 
-                  alt={`Día ${currentDay} - Imagen ${index + 1}`} 
-                  onError={(e) => e.target.style.display = 'none'} // Oculta imágenes si no cargan
+                  alt={`Semana ${currentWeek} - Día ${index + 1}`} 
+                  onError={(e) => e.target.style.display = 'none'}
                 />
               </div>
             ))}
           </Carousel>
         </div>
 
-        {/* Sección de calificación */}
-        <div className="rating-section">
-          <h3>¿Qué tan bien te sentiste durante la caminata?</h3>
-          <div className="input-group">
-            <label>
-              Calificación (1-10):
-              <input type="number" min="1" max="10" value={rating} onChange={handleRatingChange} />
-            </label>
-            <label>
-              ¿Qué tanto cumpliste con la recomendación de la caminata? (1-10):
-              <input type="number" min="1" max="10" value={followedInstructions} onChange={handleFollowInstructionsChange} />
-            </label>
+        {currentDay === 7 && (
+          <div className="rating-section">
+            <h3>¿Qué tan bien te sentiste durante la caminata?</h3>
+            <div className="input-group">
+              <label>
+                Calificación (1-10):
+                <input type="number" min="1" max="10" value={rating} onChange={handleRatingChange} />
+              </label>
+              <label>
+                ¿Qué tanto cumpliste con la recomendación de la caminata? (1-10):
+                <input type="number" min="1" max="10" value={followedInstructions} onChange={handleFollowInstructionsChange} />
+              </label>
+            </div>
           </div>
+        )}
+
+        <div className="completion-checkbox">
+          <label>
+            <input type="checkbox" checked={dayCompleted} onChange={handleCheckboxChange} />
+            Marcar este día como completado
+          </label>
         </div>
 
-        {/* Botones de avance */}
         <div className="next-buttons">
-          <button className="next-day-btn" onClick={handleNextDay} disabled={currentDay >= 7}>
+          <button className="next-day-btn" onClick={handleNextDay} disabled={currentDay >= 7 || !dayCompleted}>
             Avanzar al siguiente día
           </button>
 
-          <button className="next-week-btn" onClick={handleNextWeek} disabled={currentWeek >= 8 || currentDay !== 7}>
+          <button className="next-week-btn" onClick={handleNextWeek} disabled={currentWeek >= 8 || currentDay !== 7 || !dayCompleted}>
             Avanzar a la siguiente semana
           </button>
         </div>
