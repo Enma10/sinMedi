@@ -81,11 +81,6 @@ const Admin = () => {
 
   return (
     <div className="admin-page">
-      <div className="temp-navigation">
-        <Link to="/register" className="temp-button">Ir a Registro</Link>
-        <Link to="/profile" className="temp-button">Ir a Perfil</Link>
-      </div>
-
       <div className="admin-container">
         <h1 className="admin-title">Panel de Administración</h1>
 
@@ -205,3 +200,4 @@ const Admin = () => {
 };
 
 export default Admin;
+
