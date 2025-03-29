@@ -8,6 +8,8 @@ const Comidas = () => {
   const [audioUrl, setAudioUrl] = useState("");
   const [rating, setRating] = useState(0);
   const [followedInstructions, setFollowedInstructions] = useState(0);
+  const [generalFeeling, setGeneralFeeling] = useState(0);
+  const [videoSeen, setVideoSeen] = useState(false); // Estado para controlar si el video se ha visto
 
   // Array con las imágenes para cada semana
   const images = [
@@ -21,8 +23,21 @@ const Comidas = () => {
     `${process.env.PUBLIC_URL}/imagesAlimentacion/semana8.gif`
   ];
 
+  // Array de audios para cada semana
+  const audios = [
+    `${process.env.PUBLIC_URL}/audiosAlimentacion/AudioA1.mp3`,
+    `${process.env.PUBLIC_URL}/audiosAlimentacion/AudioA2.mp3`,
+    `${process.env.PUBLIC_URL}/audiosAlimentacion/AudioA3.mp3`,
+    `${process.env.PUBLIC_URL}/audiosAlimentacion/AudioA4.mp3`,
+    `${process.env.PUBLIC_URL}/audiosAlimentacion/AudioA5.mp3`,
+    `${process.env.PUBLIC_URL}/audiosAlimentacion/AudioA6.mp3`,
+    `${process.env.PUBLIC_URL}/audiosAlimentacion/AudioA7.mp3`,
+    `${process.env.PUBLIC_URL}/audiosAlimentacion/AudioA8.mp3`
+  ];
+
   useEffect(() => {
-    const newAudioUrl = `${process.env.PUBLIC_URL}/audiosAlimentacion/audioA${currentWeek}.mp3`;
+    // Establecer el audio de la semana actual
+    const newAudioUrl = audios[currentWeek - 1];
     setAudioUrl(newAudioUrl);
 
     // Forzar la carga del audio
@@ -40,11 +55,17 @@ const Comidas = () => {
     setFollowedInstructions(value);
   };
 
+  const handleGeneralFeelingChange = (e) => {
+    const value = Math.max(0, Math.min(10, Number(e.target.value)));
+    setGeneralFeeling(value);
+  };
+
   const handleNextDay = () => {
     if (currentDay < 7) {
       setCurrentDay(currentDay + 1);
       setRating(0);
       setFollowedInstructions(0);
+      setGeneralFeeling(0);
     }
   };
 
@@ -54,16 +75,36 @@ const Comidas = () => {
       setCurrentDay(1);
       setRating(0);
       setFollowedInstructions(0);
+      setGeneralFeeling(0);
     }
   };
+
+  const handleVideoSeen = () => {
+    setVideoSeen(true);
+  };
+
+  if (!videoSeen) {
+    return (
+      <div className="intro-video-container">
+        <div className="video-container">
+          <h3>Bienvenido al plan de alimentacion basado en comidas caseras</h3>
+          <video width="80%" controls>
+            <source src={`${process.env.PUBLIC_URL}/videos/presentacion.mp4`} type="video/mp4" />
+            Tu navegador no soporta el video.
+          </video>
+          <button className="advance-button" onClick={handleVideoSeen}>Avanzar a la semana</button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="comidas-container">
       <div className="comidas-box">
-        <h1>Semana {currentWeek} - Día {currentDay} del Plan de Comidas</h1>
+        <h1>Semana {currentWeek} Plan de alimentación basado en comidas caseras</h1>
 
         <div className="audio-section">
-          <h3>Audio del Plan de Comidas para esta Semana</h3>
+          <h3>Indicaciones: sigue las recomendaciones del plan de alimentación y escucha el audio al menos una vez por semana.</h3>
           <audio key={audioUrl} controls>
             <source src={audioUrl} type="audio/mpeg" />
             Tu navegador no soporta el audio.
@@ -76,10 +117,10 @@ const Comidas = () => {
         </div>
 
         <div className="rating-section">
-          <h3>¿Qué tan bien seguiste el plan de comidas hoy?</h3>
+          <h3>Al finalizar la semana responde:</h3>
+          <h3>Del 0 al 10 qué tanto seguiste la recomendación de escuchar el audio (0-10):</h3>
           <div className="input-group">
             <label>
-              Calificación (0-10):
               <input
                 type="number"
                 min="0"
@@ -89,7 +130,7 @@ const Comidas = () => {
               />
             </label>
             <label>
-              ¿Cuánto seguiste las instrucciones? (0-10):
+              <h3>Del 0 al 10 qué tanto seguiste las recomendaciones del plan de alimentación basado en comidas caseras (0-10):</h3>
               <input
                 type="number"
                 min="0"
@@ -98,14 +139,20 @@ const Comidas = () => {
                 onChange={handleFollowInstructionsChange}
               />
             </label>
+            <label>
+              <h3>Del 0 al 10 cómo te sentiste de manera general esta semana (0-10):</h3>
+              <input
+                type="number"
+                min="0"
+                max="10"
+                value={generalFeeling}
+                onChange={handleGeneralFeelingChange}
+              />
+            </label>
           </div>
         </div>
 
         <div className="next-buttons">
-          <button className="next-day-btn" onClick={handleNextDay} disabled={currentDay >= 7}>
-            Avanzar al siguiente día
-          </button>
-
           <button className="next-week-btn" onClick={handleNextWeek} disabled={currentWeek >= 8 || currentDay !== 7}>
             Avanzar a la siguiente semana
           </button>
