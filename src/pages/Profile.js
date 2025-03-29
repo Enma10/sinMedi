@@ -166,10 +166,10 @@ const Profile = () => {
 
           <div className="tabs">
             <Link to="/caminatas">
-              <button className="profile-button">Caminatas</button>
+              <button className="profile-button">Caminata a intensidad moderada</button>
             </Link>
             <Link to="/comidas">
-              <button className="profile-button">Plan Alimenticio</button>
+              <button className="profile-button">Plan de alimentación basado en comidas caseras</button>
             </Link>
           </div>
 
@@ -222,3 +222,4 @@ const Profile = () => {
 };
 
 export default Profile;
+
