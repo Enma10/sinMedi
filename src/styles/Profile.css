@@ -1,56 +1,73 @@
+/* Variables de colores para fácil mantenimiento */
+:root {
+    --primary-color: #369A98;
+    --primary-hover: #2B7A78;
+    --background-light: #f4f7fc;
+    --white: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #369A98, #B7DAD4);
+    margin: 0;
+    padding: 0;
+}
+
 /* Botón flotante de WhatsApp */
 .whatsapp-button {
     position: fixed;
     bottom: 20px;
     right: 20px;
     background-color: #25D366;
-    color: white;
-    width: 60px;
-    height: 60px;
+    color: var(--white);
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px var(--shadow-color);
     text-decoration: none;
-    transition: transform 0.2s ease-in-out;
+    transition: transform 0.3s ease-in-out;
 }
 
 .whatsapp-button svg {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
 }
 
 .whatsapp-button:hover {
     transform: scale(1.1);
 }
 
-/* Estilos del contenedor principal */
+/* Contenedor principal */
 .profile-container {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    height: auto;
-    background-color: #f4f7fc;
+    align-items: center;
+    flex-direction: column;
     padding: 20px;
-    flex-direction: column; /* Asegura que el contenido se alinee en columna */
 }
 
+/* Caja de perfil */
 .profile-box {
-    background: #ffffff;
-    padding: 30px;
+    background: var(--white);
+    padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 10px var(--shadow-color);
     width: 100%;
-    max-width: 400px;
+    max-width: 380px;
     text-align: center;
-    margin-top: 20px; /* Añadido para separar del borde superior */
+    margin-top: 20px;
 }
 
+/* Título */
 h1 {
     color: #2c3e50;
     font-size: 24px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 /* Ajustes para la foto de perfil */
@@ -59,43 +76,35 @@ h1 {
     height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 15px;
-    border: 3px solid #3498db;
+    border: 3px solid var(--primary-color);
+    margin: 15px auto;
     display: block;
-    overflow: hidden;
-    background-color: #f4f7fc;
-    margin-top: 20px; /* Añadido para alinear la foto de perfil con el resto */
 }
 
 /* Sección de carga de fotos */
 .photo-upload {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 20px;
-    align-self: flex-start; /* Alinea las fotos a la izquierda */
+    align-items: center;
+    margin-bottom: 15px;
 }
 
-.photo-upload label {
-    margin-bottom: 10px;
-}
-
-/* Estilos de los botones */
+/* Botón principal */
 .profile-button {
-    background-color: #3498db;
-    color: white;
+    background: #E83A6B;
+    color: var(--white);
     border: none;
     padding: 12px;
     width: 100%;
     margin-top: 10px;
-    border-radius: 5px;
+    border-radius: 20px;
     font-size: 16px;
     cursor: pointer;
     transition: 0.3s;
 }
 
 .profile-button:hover {
-    background-color: #2980b9;
+    background: #c22753;
 }
 
 /* Estilos del modal */
@@ -112,7 +121,7 @@ h1 {
 }
 
 .modal-content {
-    background: white;
+    background: var(--white);
     padding: 20px;
     border-radius: 10px;
     width: 350px;
@@ -122,20 +131,19 @@ h1 {
 /* Botón de cerrar */
 .close-modal {
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
     background: none;
     border: none;
-    font-size: 14px;
-    cursor: pointer;
     color: #e74c3c;
+    cursor: pointer;
 }
 
-/* Estilos para fotos pequeñas */
+/* Imágenes pequeñas */
 .small-photo {
     width: 100%;
     max-width: 120px;
-    height: auto;
     object-fit: cover;
     cursor: pointer;
     margin: 10px;
@@ -157,43 +165,17 @@ h1 {
     padding: 20px;
 }
 
-.modal-content {
-    position: relative;
-    background-color: white;
-    padding: 20px;
-    text-align: center;
-    max-width: 90vw;
-    max-height: 90vh;
-    overflow: auto;
-}
-
-.large-image {
+.modal-content img {
     max-width: 100%;
     max-height: 80vh;
     object-fit: contain;
 }
 
-.close-modal {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 24px;
-    background: none;
-    border: none;
-    color: black;
-    cursor: pointer;
-}
-
-/* Media Queries para hacerlo responsivo */
+/* --- Diseño responsivo --- */
 @media (max-width: 768px) {
     .profile-box {
-        width: 100%;
-        max-width: 350px;
-        padding: 20px;
-    }
-
-    h1 {
-        font-size: 20px;
+        max-width: 340px;
+        padding: 1.8rem;
     }
 
     .profile-photo {
@@ -201,42 +183,39 @@ h1 {
         height: 100px;
     }
 
+    .profile-button {
+        font-size: 15px;
+        padding: 10px;
+    }
+
     .whatsapp-button {
-        bottom: 10px;
-        right: 10px;
+        bottom: 15px;
+        right: 15px;
         width: 50px;
         height: 50px;
     }
 
-    .small-photo {
-        max-width: 90px;
-    }
-
-    .photo-upload {
-        text-align: center;
-    }
-
-    .profile-button {
-        font-size: 14px;
-        padding: 10px;
+    .whatsapp-button svg {
+        width: 28px;
+        height: 28px;
     }
 }
 
 @media (max-width: 480px) {
     .profile-box {
-        width: 100%;
-        max-width: 300px;
-        padding: 15px;
+        width: 95%;
+        max-width: 320px;
+        padding: 1.5rem;
     }
 
     .profile-photo {
-        width: 80px;
-        height: 80px;
+        width: 90px;
+        height: 90px;
     }
 
     .profile-button {
         font-size: 14px;
-        padding: 10px;
+        padding: 8px;
     }
 
     .whatsapp-button {
@@ -245,4 +224,10 @@ h1 {
         width: 45px;
         height: 45px;
     }
+
+    .whatsapp-button svg {
+        width: 26px;
+        height: 26px;
+    }
 }
+
