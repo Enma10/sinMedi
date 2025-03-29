@@ -42,18 +42,18 @@
   padding: 8px 12px;
   border: none;
   border-radius: 5px;
-  background: #1565c0;
+   background: #E83A6B;
   color: white;
   cursor: pointer;
 }
 
 .buttons button:hover {
-  background: #0d47a1;
+  background: #c22753;
 }
 
 /* Expedientes */
 .expediente-button {
-  background-color: #1565c0;
+  background: #E83A6B;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -63,7 +63,7 @@
 }
 
 .expediente-button:hover {
-  background-color: #0d47a1;
+  background: #c22753;
 }
 
 .expediente-list {
@@ -178,3 +178,4 @@
     font-size: 14px;
   }
 }
+
