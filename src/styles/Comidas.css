@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f4f4f9;
+  background: linear-gradient(135deg, #369A98, #B7DAD4);
 }
 
 .comidas-box {
@@ -90,4 +90,95 @@ h1 {
   display: block;
   margin: 20px auto;
   border-radius: 30px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 20px;
+  }
+
+  .comidas-box {
+    padding: 15px;
+  }
+
+  .audio-section h3,
+  .rating-section h3 {
+    font-size: 16px;
+  }
+
+  .input-group label {
+    font-size: 14px;
+  }
+
+  .input-group input {
+    font-size: 14px;
+  }
+
+  .next-week-btn, .profile-button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .week-image {
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 18px;
+  }
+
+  .comidas-box {
+    padding: 10px;
+  }
+
+  .audio-section h3,
+  .rating-section h3 {
+    font-size: 14px;
+  }
+
+  .input-group label {
+    font-size: 12px;
+  }
+
+  .input-group input {
+    font-size: 14px;
+  }
+
+  .next-week-btn, .profile-button {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .week-image {
+    max-width: 200px;
+  }
+}
+
+/* Estilo para centrar el video y el botón */
+.intro-video-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.video-container {
+  text-align: center;
+}
+
+.advance-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.advance-button:hover {
+  background-color: #45a049;
 }
