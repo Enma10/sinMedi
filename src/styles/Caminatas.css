@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: flex-start; /* Alinea al principio para que el contenido no se quede demasiado abajo */
   padding: 20px;
-  background-color: #f9f9f9;
+  background: linear-gradient(135deg, #369A98, #B7DAD4);
   height: 100vh;
   box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
 }
@@ -129,3 +129,67 @@ p {
   margin-top: 20px;
   font-size: 1.2em; /* Ajuste para mejor visibilidad */
 }
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.4em;
+  }
+
+  .caminatas-box {
+    padding: 20px;
+  }
+
+  .audio-section h3, .rating-section h3 {
+    font-size: 1em;
+  }
+
+  .input-group label {
+    font-size: 0.9em;
+  }
+
+  .input-group input {
+    font-size: 0.9em;
+  }
+
+  .next-day-btn, .next-week-btn {
+    font-size: 1em;
+    padding: 8px 16px;
+  }
+
+  .carousel-section img {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.2em;
+  }
+
+  .caminatas-box {
+    padding: 15px;
+  }
+
+  .audio-section h3, .rating-section h3 {
+    font-size: 0.9em;
+  }
+
+  .input-group label {
+    font-size: 0.8em;
+  }
+
+  .input-group input {
+    font-size: 0.9em;
+  }
+
+  .next-day-btn, .next-week-btn {
+    font-size: 0.9em;
+    padding: 8px 12px;
+  }
+
+  .carousel-section img {
+    height: 150px;
+  }
+}
+
